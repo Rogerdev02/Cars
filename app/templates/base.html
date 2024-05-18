@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: hsla(0, 0%, 0%, 0);
+            color: #000000;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #000000;
+            color: #000000;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #000000;
+            color: #f9f8f8;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #000000df;
+            color: #fff;
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #32bbe8;
+        }
+
+        nav ul li.active a {
+            background-color: #666;
+        }
+
+        nav ul li.active a:hover {
+            background-color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                {% if user.is_authenticated %}
+                <li>USUÁRIO: {{ user.username|upper }}</li>
+                <li><a href="{% url 'new_car' %}">CADASTRAR CARROS</a></li>
+                {% endif %}
+                {% if not user.is_authenticated %}
+                <li><a href="{% url 'register' %}">CADASTRE-SE</a></li>
+                <li><a href="{% url 'login' %}">LOGIN</a></li>
+                {% endif %}
+                <li><a href="{% url 'cars_list' %}">CARROS</a></li>
+
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">SAIR</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 ROGER_RSV_AUTO™</p>
+    </footer>
+</body>
+
+</html>
